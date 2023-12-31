@@ -1,8 +1,19 @@
 {
   "name": "blow-dry",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
+  "keywords": [
+    "web-components",
+    "web-component",
+    "custom-element",
+    "custom-elements"
+  ],
+  "description": "Turn some (server) expanded HTML into the smallest, optimized HTML representation so it can be rapidly cloned (via web components, for example) on the client",
+  "main": "blow-dry.js",
+  "module": "blow-dry.js",
+  "exports": {
+    ".": "./blow-dry.js",
+    "./blow-dry.js": "./blow-dry.js"
+  },
   "scripts": {
     "serve": "node node_modules/may-it-serve/serve.js",
     "update": "ncu -u && npm install"
@@ -14,7 +25,7 @@
     "type": "git",
     "url": "git+https://github.com/bahrus/blow-dry.git"
   },
-  "author": "",
+  "author": "anderson.bruce.b@gmail.com",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/bahrus/blow-dry/issues"
