@@ -26,3 +26,7 @@ Users can customize what adjustments are made to the ssr rendered web component 
 
 1.  Setting attributes "remove-inner", "remove-outer".
 2.  Extend this web component, and override methods removeInner, removeOuter.
+
+The "cleansed" template can be obtained via oBlowDryInstance.canonicalTemplate.
+
+If the component hasn't loaded yet, can listen for event "resolved" to be fired, and then pull in the template.

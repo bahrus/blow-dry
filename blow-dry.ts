@@ -52,7 +52,7 @@ export class BlowDry extends HTMLElement{
         this.expandTemplates(templ.content, true);
         this.#canonicalTemplate = templ;
         this.expandTemplates(rn);
-        
+        this.dispatchEvent(new Event('resolved'));
         
     }
 }
