@@ -24,7 +24,6 @@ export class BlowDry extends HTMLElement {
         clone.querySelectorAll(removeOuter).forEach(nd => {
             nd.remove();
         });
-        this.expandTemplates(clone);
     }
     expandTemplates(node) {
         const templSelector = this.getAttribute('instantiate') || this.instantiate;
@@ -40,6 +39,7 @@ export class BlowDry extends HTMLElement {
             throw 'NI';
         const clone = rn.cloneNode(true);
         this.doCleanup(clone);
+        this.expandTemplates(clone);
         this.#clonedRootNode = clone;
         this.expandTemplates(rn);
     }

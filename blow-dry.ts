@@ -28,7 +28,7 @@ export class BlowDry extends HTMLElement{
         clone.querySelectorAll(removeOuter).forEach(nd => {
             nd.remove();
         });
-        this.expandTemplates(clone);
+        
     }
 
     expandTemplates(node: DocumentFragment){
@@ -46,6 +46,7 @@ export class BlowDry extends HTMLElement{
         if(!(rn instanceof ShadowRoot)) throw 'NI';
         const clone = rn.cloneNode(true) as DocumentFragment;
         this.doCleanup(clone);
+        this.expandTemplates(clone);
         this.#clonedRootNode = clone;
         this.expandTemplates(rn);
         
