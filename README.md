@@ -2,7 +2,7 @@
 
 Turn some expanded HTML into the smallest, optimized HTML representation so it can be rapidly cloned (via web components, for example).
 
-This allows a server rendered web component to serve also as a template for a web component.
+This allows a server rendered web component to serve also as a template for the definition of the web component, without having to package that separately.
 
 ```html
 <my-ssr-web-component>
