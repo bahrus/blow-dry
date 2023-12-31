@@ -1,25 +1,21 @@
-export class BlowDry extends HTMLElement{
+export class BlowDry extends HTMLElement {
     #removeInner = '[itemprop]:not([itemscope]]';
-    get removeInner(){
+    get removeInner() {
         return this.#removeInner;
     }
-
     #removeOuter = 'tbody>tr:not([aria-index="0"])';
-    get removeOuter(){
+    get removeOuter() {
         return this.#removeOuter;
     }
-
-    #clonedRootNode: Node | undefined;
-    get clonedRootNode(){
+    #clonedRootNode;
+    get clonedRootNode() {
         return this.#clonedRootNode;
     }
-
     #instantiate = 'template[data-load-when-ready]';
-    get instantiate(){
+    get instantiate() {
         return this.#instantiate;
     }
-
-    doCleanup(clone: DocumentFragment){
+    doCleanup(clone) {
         const removeInner = this.getAttribute('remove-inner') || this.removeInner;
         clone.querySelectorAll(removeInner).forEach(nd => {
             nd.innerHTML = '';
@@ -30,29 +26,24 @@ export class BlowDry extends HTMLElement{
         });
         this.expandTemplates(clone);
     }
-
-    expandTemplates(node: DocumentFragment){
+    expandTemplates(node) {
         const templSelector = this.getAttribute('instantiate') || this.instantiate;
-        const templs = Array.from(document.querySelectorAll(templSelector)) as Array<HTMLTemplateElement>;
-        for(const templ of templs){
+        const templs = Array.from(document.querySelectorAll(templSelector));
+        for (const templ of templs) {
             const clonedTempl = templ.content.cloneNode(true);
             node.appendChild(clonedTempl);
         }
-        
     }
-
-    connectedCallback(){
+    connectedCallback() {
         const rn = this.getRootNode();
-        if(!(rn instanceof ShadowRoot)) throw 'NI';
-        const clone = rn.cloneNode(true) as DocumentFragment;
+        if (!(rn instanceof ShadowRoot))
+            throw 'NI';
+        const clone = rn.cloneNode(true);
         this.doCleanup(clone);
         this.#clonedRootNode = clone;
         this.expandTemplates(rn);
-        
-        
     }
 }
-
-if(!customElements.get('blow-dry')){
+if (!customElements.get('blow-dry')) {
     customElements.define('blow-dry', BlowDry);
 }
