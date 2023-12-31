@@ -1,5 +1,5 @@
 export class BlowDry extends HTMLElement{
-    #removeInner = '[itemprop]:not([itemscope]]';
+    #removeInner = '[itemprop]:not([itemscope])';
     get removeInner(){
         return this.#removeInner;
     }
@@ -9,9 +9,9 @@ export class BlowDry extends HTMLElement{
         return this.#removeOuter;
     }
 
-    #clonedRootNode: Node | undefined;
-    get clonedRootNode(){
-        return this.#clonedRootNode;
+    #canonicalTemplate: Node | undefined;
+    get canonicalTemplate(){
+        return this.#canonicalTemplate;
     }
 
     #instantiate = 'template[data-load-when-ready]';
@@ -28,15 +28,16 @@ export class BlowDry extends HTMLElement{
         clone.querySelectorAll(removeOuter).forEach(nd => {
             nd.remove();
         });
-        
+        clone.querySelector(this.localName)?.remove();
     }
 
-    expandTemplates(node: DocumentFragment){
+    expandTemplates(node: DocumentFragment, del=false){
         const templSelector = this.getAttribute('instantiate') || this.instantiate;
-        const templs = Array.from(document.querySelectorAll(templSelector)) as Array<HTMLTemplateElement>;
+        const templs = Array.from(node.querySelectorAll(templSelector)) as Array<HTMLTemplateElement>;
         for(const templ of templs){
             const clonedTempl = templ.content.cloneNode(true);
             node.appendChild(clonedTempl);
+            if(del) templ.remove();
         }
         
     }
@@ -44,10 +45,12 @@ export class BlowDry extends HTMLElement{
     connectedCallback(){
         const rn = this.getRootNode();
         if(!(rn instanceof ShadowRoot)) throw 'NI';
-        const clone = rn.cloneNode(true) as DocumentFragment;
-        this.doCleanup(clone);
-        this.expandTemplates(clone);
-        this.#clonedRootNode = clone;
+        const templ = document.createElement('template');
+        templ.innerHTML = rn.innerHTML;
+        //const clone = rn.cloneNode(true) as DocumentFragment;
+        this.doCleanup(templ.content);
+        this.expandTemplates(templ.content, true);
+        this.#canonicalTemplate = templ;
         this.expandTemplates(rn);
         
         

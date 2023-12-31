@@ -1,5 +1,5 @@
 export class BlowDry extends HTMLElement {
-    #removeInner = '[itemprop]:not([itemscope]]';
+    #removeInner = '[itemprop]:not([itemscope])';
     get removeInner() {
         return this.#removeInner;
     }
@@ -7,9 +7,9 @@ export class BlowDry extends HTMLElement {
     get removeOuter() {
         return this.#removeOuter;
     }
-    #clonedRootNode;
-    get clonedRootNode() {
-        return this.#clonedRootNode;
+    #canonicalTemplate;
+    get canonicalTemplate() {
+        return this.#canonicalTemplate;
     }
     #instantiate = 'template[data-load-when-ready]';
     get instantiate() {
@@ -24,23 +24,28 @@ export class BlowDry extends HTMLElement {
         clone.querySelectorAll(removeOuter).forEach(nd => {
             nd.remove();
         });
+        clone.querySelector(this.localName)?.remove();
     }
-    expandTemplates(node) {
+    expandTemplates(node, del = false) {
         const templSelector = this.getAttribute('instantiate') || this.instantiate;
-        const templs = Array.from(document.querySelectorAll(templSelector));
+        const templs = Array.from(node.querySelectorAll(templSelector));
         for (const templ of templs) {
             const clonedTempl = templ.content.cloneNode(true);
             node.appendChild(clonedTempl);
+            if (del)
+                templ.remove();
         }
     }
     connectedCallback() {
         const rn = this.getRootNode();
         if (!(rn instanceof ShadowRoot))
             throw 'NI';
-        const clone = rn.cloneNode(true);
-        this.doCleanup(clone);
-        this.expandTemplates(clone);
-        this.#clonedRootNode = clone;
+        const templ = document.createElement('template');
+        templ.innerHTML = rn.innerHTML;
+        //const clone = rn.cloneNode(true) as DocumentFragment;
+        this.doCleanup(templ.content);
+        this.expandTemplates(templ.content, true);
+        this.#canonicalTemplate = templ;
         this.expandTemplates(rn);
     }
 }

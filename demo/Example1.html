@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example1</title>
+</head>
+<body>
+    <my-ssr-web-component>
+        <template shadowrootmode=open>
+            <span itemprop>some dynamic data</span>
+            <table>
+                <thead>
+                    <tr><th>hello</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>test</td></tr>
+                </tbody>
+            </table>
+            <template data-load-when-ready>
+                <be-hive></be-hive>
+            </template>
+            <blow-dry></blow-dry>
+        </template>
+    </my-ssr-web-component>
+    <script type=module>
+        import '../blow-dry.js';
+    </script>
+</body>
+</html>
