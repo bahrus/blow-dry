@@ -12,6 +12,7 @@ This allows a server rendered web component to serve also as a template for a we
             <thead>
             </thead>
             <tbody>
+            </tbody>
         </table>
         <template data-load-when-ready>
             <be-hive></be-hive>
