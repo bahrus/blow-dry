@@ -1,3 +1,4 @@
+import {BlowDryProps} from './types';
 export class BlowDry extends HTMLElement{
     #removeInner = '[itemprop]:not([itemscope])';
     get removeInner(){
@@ -9,7 +10,7 @@ export class BlowDry extends HTMLElement{
         return this.#removeOuter;
     }
 
-    #canonicalTemplate: Node | undefined;
+    #canonicalTemplate: HTMLTemplateElement | undefined;
     get canonicalTemplate(){
         return this.#canonicalTemplate;
     }
@@ -43,8 +44,8 @@ export class BlowDry extends HTMLElement{
     }
 
     connectedCallback(){
-        const rn = this.getRootNode();
-        if(!(rn instanceof ShadowRoot)) throw 'NI';
+        const rn = this.parentElement || this.getRootNode() as Element | ShadowRoot;
+        if(!rn) throw 404;
         const templ = document.createElement('template');
         templ.innerHTML = rn.innerHTML;
         //const clone = rn.cloneNode(true) as DocumentFragment;
@@ -52,10 +53,13 @@ export class BlowDry extends HTMLElement{
         this.expandTemplates(templ.content, true);
         this.#canonicalTemplate = templ;
         this.expandTemplates(rn);
+        this.resolved = true;
         this.dispatchEvent(new Event('resolved'));
         
     }
 }
+
+export interface BlowDry extends BlowDryProps{}
 
 if(!customElements.get('blow-dry')){
     customElements.define('blow-dry', BlowDry);

@@ -37,9 +37,9 @@ export class BlowDry extends HTMLElement {
         }
     }
     connectedCallback() {
-        const rn = this.getRootNode();
-        if (!(rn instanceof ShadowRoot))
-            throw 'NI';
+        const rn = this.parentElement || this.getRootNode();
+        if (!rn)
+            throw 404;
         const templ = document.createElement('template');
         templ.innerHTML = rn.innerHTML;
         //const clone = rn.cloneNode(true) as DocumentFragment;
@@ -47,6 +47,8 @@ export class BlowDry extends HTMLElement {
         this.expandTemplates(templ.content, true);
         this.#canonicalTemplate = templ;
         this.expandTemplates(rn);
+        this.resolved = true;
+        this.dispatchEvent(new Event('resolved'));
     }
 }
 if (!customElements.get('blow-dry')) {
