@@ -11,9 +11,13 @@ export class BlowDry extends HTMLElement {
     get canonicalTemplate() {
         return this.#canonicalTemplate;
     }
-    #instantiate = 'template[data-load-when-ready]';
-    get instantiate() {
-        return this.#instantiate;
+    // #instantiate = 'template[data-load-when-ready]';
+    // get instantiate(){
+    //     return this.#instantiate;
+    // }
+    #blowDryToHeadSelector = 'template[onload="blow-dry-to-head"]';
+    get blowDryToHeadSelector() {
+        return this.#blowDryToHeadSelector;
     }
     doCleanup(clone) {
         const removeInner = this.getAttribute('remove-inner') || this.removeInner;
@@ -26,14 +30,22 @@ export class BlowDry extends HTMLElement {
         });
         clone.querySelector(this.localName)?.remove();
     }
-    expandTemplates(node, del = false) {
-        const templSelector = this.getAttribute('instantiate') || this.instantiate;
-        const templs = Array.from(node.querySelectorAll(templSelector));
+    // expandTemplatesWithinScope(node: DocumentFragment, del=false){
+    //     const templSelector = this.getAttribute('instantiate') || this.instantiate;
+    //     const templs = Array.from(node.querySelectorAll(templSelector)) as Array<HTMLTemplateElement>;
+    //     for(const templ of templs){
+    //         const clonedTempl = templ.content.cloneNode(true);
+    //         node.appendChild(clonedTempl);
+    //         if(del) templ.remove();
+    //     }
+    // }
+    blowDryToHead(node) {
+        const templs = Array.from(node.querySelectorAll(this.blowDryToHeadSelector));
+        const { head } = document;
         for (const templ of templs) {
             const clonedTempl = templ.content.cloneNode(true);
-            node.appendChild(clonedTempl);
-            if (del)
-                templ.remove();
+            head.appendChild(clonedTempl);
+            templ.remove();
         }
     }
     connectedCallback() {
@@ -44,9 +56,10 @@ export class BlowDry extends HTMLElement {
         templ.innerHTML = rn.innerHTML;
         //const clone = rn.cloneNode(true) as DocumentFragment;
         this.doCleanup(templ.content);
-        this.expandTemplates(templ.content, true);
+        this.blowDryToHead(templ.content);
+        // this.expandTemplatesWithinScope(templ.content, true);
         this.#canonicalTemplate = templ;
-        this.expandTemplates(rn);
+        // this.expandTemplatesWithinScope(rn as DocumentFragment);
         this.resolved = true;
         this.dispatchEvent(new Event('resolved'));
     }

@@ -18,9 +18,12 @@ This allows a server rendered web component to serve also as a template for the 
             <tbody>
             </tbody>
         </table>
-        <template data-load-when-ready>
-            <be-hive></be-hive>
-        <template>
+        <template onload=blow-dry-to-head>
+            <script>
+                import 'be-bound/be-bound.js';
+            </script>
+            <link rel=stylesheet href=https://fonts.googleapis.com/css?family=Indie+Flower>
+        </template>
         <blow-dry></blow-dry>
     </template>
 </my-ssr-web-component>
