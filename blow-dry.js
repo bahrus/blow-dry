@@ -44,7 +44,19 @@ export class BlowDry extends HTMLElement {
         const { head } = document;
         for (const templ of templs) {
             const clonedTempl = templ.content.cloneNode(true);
-            head.appendChild(clonedTempl);
+            const children = Array.from(clonedTempl.children);
+            for (const child of children) {
+                if (child instanceof HTMLScriptElement) {
+                    const scriptEl = document.createElement('script');
+                    scriptEl.type = child.type;
+                    scriptEl.innerHTML = child.innerHTML;
+                    //scriptEl.src = child.src;
+                    head.appendChild(scriptEl);
+                }
+                else {
+                    head.appendChild(child);
+                }
+            }
             templ.remove();
         }
     }
