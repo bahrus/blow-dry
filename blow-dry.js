@@ -64,11 +64,11 @@ export class BlowDry extends HTMLElement {
         const rn = this.parentElement || this.getRootNode();
         if (!rn)
             throw 404;
+        this.blowDryToHead(rn);
         const templ = document.createElement('template');
         templ.innerHTML = rn.innerHTML;
         //const clone = rn.cloneNode(true) as DocumentFragment;
         this.doCleanup(templ.content);
-        this.blowDryToHead(templ.content);
         // this.expandTemplatesWithinScope(templ.content, true);
         this.#canonicalTemplate = templ;
         // this.expandTemplatesWithinScope(rn as DocumentFragment);
