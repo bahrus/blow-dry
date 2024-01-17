@@ -3,7 +3,7 @@ export class BlowDry extends HTMLElement {
     get removeInner() {
         return this.#removeInner;
     }
-    #removeOuter = 'tbody>tr:not([aria-index="0"])';
+    #removeOuter = 'tbody>tr:not([aria-index="0"]),[blow-dry-remove]';
     get removeOuter() {
         return this.#removeOuter;
     }
