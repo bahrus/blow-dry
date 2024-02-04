@@ -46,18 +46,17 @@ export class BlowDry extends HTMLElement {
     blowDry(node) {
         const templs = Array.from(node.querySelectorAll(this.blowDrySelector));
         const head = document.head;
-        let currentCnt = Number(head.getAttribute('data-blow-dry-cnt')) || 0;
+        let currentCnt = Number(head.dataset.blowDryCnt) || 0;
         for (const templ of templs) {
             const id = 'blow-dry-src-' + currentCnt;
-            //templ.id = id;
             const sourceTempl = document.createElement('template');
             sourceTempl.id = id;
-            templ.setAttribute('data-blow-dry-template-ref', id);
+            templ.dataset.blowDryTemplRef = id;
             sourceTempl.content.appendChild(templ.content);
             head.append(sourceTempl);
             currentCnt++;
         }
-        head.setAttribute('data-blow-dry-cnt', currentCnt.toString());
+        head.dataset.blowDryCnt = currentCnt.toString();
     }
     blowDryToHead(node) {
         const templs = Array.from(node.querySelectorAll(this.blowDryToHeadSelector));
