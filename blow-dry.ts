@@ -58,11 +58,12 @@ export class BlowDry extends HTMLElement{
         let currentCnt = Number(head.getAttribute('data-blow-dry-cnt')) || 0;
         for(const templ of templs){
             const id = 'blow-dry-src-' + currentCnt;
-            templ.id = id;
-            const reducedTemplate = document.createElement('template');
-            reducedTemplate.setAttribute('data-template-ref', id);
-            templ.after(reducedTemplate);
-            head.append(reducedTemplate);
+            //templ.id = id;
+            const sourceTempl = document.createElement('template');
+            sourceTempl.id = id;
+            templ.setAttribute('data-blow-dry-template-ref', id);
+            sourceTempl.content.appendChild(templ.content);
+            head.append(sourceTempl);
             currentCnt++;
         }
         head.setAttribute('data-blow-dry-cnt', currentCnt.toString());
