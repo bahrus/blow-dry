@@ -25,6 +25,11 @@ export class BlowDry extends HTMLElement{
         return this.#blowDryToHeadSelector;
     }
 
+    #blowDrySelector = 'template[blow-dry],template[data-blow-dry]';
+    get blowDrySelector(){
+        return this.#blowDrySelector;
+    }
+
     doCleanup(clone: DocumentFragment){
         const removeInner = this.getAttribute('remove-inner') || this.removeInner;
         clone.querySelectorAll(removeInner).forEach(nd => {
@@ -47,6 +52,21 @@ export class BlowDry extends HTMLElement{
     //     }
     // }
 
+    blowDry(node: DocumentFragment){
+        const templs = Array.from(node.querySelectorAll(this.blowDrySelector)) as Array<HTMLTemplateElement>;
+        const head = document.head;
+        let currentCnt = Number(head.getAttribute('data-blow-dry-cnt')) || 0;
+        for(const templ of templs){
+            const id = 'blow-dry-src-' + currentCnt;
+            templ.id = id;
+            const reducedTemplate = document.createElement('template');
+            reducedTemplate.setAttribute('data-template-ref', id);
+            templ.after(reducedTemplate);
+            head.append(reducedTemplate);
+            currentCnt++;
+        }
+        head.setAttribute('data-blow-dry-cnt', currentCnt.toString());
+    }
     blowDryToHead(node: DocumentFragment){
         const templs = Array.from(node.querySelectorAll(this.blowDryToHeadSelector)) as Array<HTMLTemplateElement>;
         const {head} = document;
@@ -72,6 +92,7 @@ export class BlowDry extends HTMLElement{
         const rn = this.parentElement || this.getRootNode() as Element | ShadowRoot;
         if(!rn) throw 404;
         this.blowDryToHead(rn as DocumentFragment);
+        this.blowDry(rn as DocumentFragment);
         const templ = document.createElement('template');
         templ.innerHTML = rn.innerHTML;
         //const clone = rn.cloneNode(true) as DocumentFragment;

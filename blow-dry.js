@@ -19,6 +19,8 @@ export class BlowDry extends HTMLElement {
     get blowDryToHeadSelector() {
         return this.#blowDryToHeadSelector;
     }
+
+
     doCleanup(clone) {
         const removeInner = this.getAttribute('remove-inner') || this.removeInner;
         clone.querySelectorAll(removeInner).forEach(nd => {
