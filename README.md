@@ -38,6 +38,28 @@ The "cleansed" template can be obtained via oBlowDryInstance.canonicalTemplate.
 
 If the component hasn't loaded yet, can listen for event "resolved" to be fired, and then pull in the template.
 
+## Templates inside of templates
+
+My performance measurements indicate that if a template has a nested template inside, it is faster to extract out the template to a shared location, clone the reduced size template, and reference the shared template.
+
+To instruct blow-dry to make this happen, add attribute blow-dry (or data-blow-dry) to the template:
+
+```html
+<template blow-dry></template>
+```
+
+What it will leave behind is a breadcrumb:
+
+```html
+<template blow-dry="blow-dry-src-1234"></template>
+```
+
+The content of the original template can then be obtained via:
+
+```JavaScript
+const clone = window['blow-dry-src-1234'].content.cloneNode(true);
+```
+
 
 ## Viewing Demos Locally
 

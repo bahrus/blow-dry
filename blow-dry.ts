@@ -63,6 +63,7 @@ export class BlowDry extends HTMLElement{
             templ.dataset.blowDryTemplRef = id;
             sourceTempl.content.appendChild(templ.content);
             head.append(sourceTempl);
+            templ.innerHTML = '';
             currentCnt++;
         }
         head.dataset.blowDryCnt = currentCnt.toString();
