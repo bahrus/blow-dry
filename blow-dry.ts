@@ -53,6 +53,9 @@ export class BlowDry extends HTMLElement{
     // }
 
     blowDryScriptElement(se: HTMLScriptElement){
+        if(se.src){
+            throw 'NI';
+        }
         //never, ever make this asynchronous!!!
         const head = document.head;
         let currentCnt = Number(head.dataset.blowDryCnt) || 0;

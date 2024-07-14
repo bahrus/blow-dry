@@ -60,7 +60,7 @@ The content of the original template can then be obtained via:
 const clone = window['blow-dry-src-1234'].content.cloneNode(true);
 ```
 
-## Same for script elements [TODO]
+## Same for inline script elements
 
 ```html
 <script blow-dry>
@@ -74,7 +74,7 @@ winds up with a breadcrumb:
 <script data-blow-dry-ref="blow-dry-src-5678"></script>
 ```
 
-Emits event unload when done.
+The script contents are available accessible via head['']
 
 
 ## Viewing Demos Locally
