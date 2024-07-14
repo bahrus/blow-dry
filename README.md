@@ -71,8 +71,10 @@ const clone = window['blow-dry-src-1234'].content.cloneNode(true);
 winds up with a breadcrumb:
 
 ```html
-<script blow-dry data-blow-dry-script-ref="blow-dry-src-5678"></script>
+<script data-blow-dry-script-ref="blow-dry-src-5678"></script>
 ```
+
+Emits event unload when done.
 
 
 ## Viewing Demos Locally
