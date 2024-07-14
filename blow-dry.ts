@@ -53,15 +53,12 @@ export class BlowDry extends HTMLElement{
     // }
 
     blowDryScriptElement(se: HTMLScriptElement){
-        if(se.src){
-            throw 'NI';
-        }
         //never, ever make this asynchronous!!!
         const head = document.head;
         let currentCnt = Number(head.dataset.blowDryCnt) || 0;
         const id = 'blow-dry-src-' + currentCnt;
         se.dataset.blowDryScriptRef = id;
-        (<any>head)[id] = se.innerHTML;
+        (<any>head)[id] = se.src ? new Set<string>([se.src]) :se.innerHTML;
         se.innerHTML = '';
         currentCnt++;
         head.dataset.blowDryCnt = currentCnt.toString();
