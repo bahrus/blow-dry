@@ -51,13 +51,27 @@ To instruct blow-dry to make this happen, add attribute blow-dry (or data-blow-d
 What it will leave behind is a breadcrumb:
 
 ```html
-<template blow-dry="blow-dry-src-1234"></template>
+<template data-blow-dry-templ-ref="blow-dry-src-1234"></template>
 ```
 
 The content of the original template can then be obtained via:
 
 ```JavaScript
 const clone = window['blow-dry-src-1234'].content.cloneNode(true);
+```
+
+## Same for script elements [TODO]
+
+```html
+<script blow-dry>
+    export const blah='blah';
+</script>
+```
+
+winds up with a breadcrumb:
+
+```html
+<script blow-dry data-blow-dry-script-ref="blow-dry-src-5678"></script>
 ```
 
 
