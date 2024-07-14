@@ -51,7 +51,7 @@ To instruct blow-dry to make this happen, add attribute blow-dry (or data-blow-d
 What it will leave behind is a breadcrumb:
 
 ```html
-<template data-blow-dry-templ-ref="blow-dry-src-1234"></template>
+<template data-blow-dry-ref="blow-dry-src-1234"></template>
 ```
 
 The content of the original template can then be obtained via:
@@ -71,7 +71,7 @@ const clone = window['blow-dry-src-1234'].content.cloneNode(true);
 winds up with a breadcrumb:
 
 ```html
-<script data-blow-dry-script-ref="blow-dry-src-5678"></script>
+<script data-blow-dry-ref="blow-dry-src-5678"></script>
 ```
 
 Emits event unload when done.

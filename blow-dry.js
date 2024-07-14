@@ -19,7 +19,7 @@ export class BlowDry extends HTMLElement {
     get blowDryToHeadSelector() {
         return this.#blowDryToHeadSelector;
     }
-    #blowDrySelector = 'template[blow-dry],template[data-blow-dry]';
+    #blowDrySelector = '[blow-dry],[data-blow-dry]';
     get blowDrySelector() {
         return this.#blowDrySelector;
     }
@@ -43,21 +43,41 @@ export class BlowDry extends HTMLElement {
     //         if(del) templ.remove();
     //     }
     // }
-    blowDry(node) {
-        const templs = Array.from(node.querySelectorAll(this.blowDrySelector));
+    blowDryScriptElement(se) {
+        //never, ever make this asynchronous!!!
         const head = document.head;
         let currentCnt = Number(head.dataset.blowDryCnt) || 0;
-        for (const templ of templs) {
-            const id = 'blow-dry-src-' + currentCnt;
-            const sourceTempl = document.createElement('template');
-            sourceTempl.id = id;
-            templ.dataset.blowDryTemplRef = id;
-            sourceTempl.content.appendChild(templ.content);
-            head.append(sourceTempl);
-            templ.innerHTML = '';
-            currentCnt++;
-        }
+        const id = 'blow-dry-src-' + currentCnt;
+        se.dataset.blowDryScriptRef = id;
+        head[id] = se.innerHTML;
+        se.innerHTML = '';
+        currentCnt++;
         head.dataset.blowDryCnt = currentCnt.toString();
+    }
+    blowDryTemplElement(templ) {
+        //never, ever make this asynchronous!!!
+        const head = document.head;
+        let currentCnt = Number(head.dataset.blowDryCnt) || 0;
+        const id = 'blow-dry-src-' + currentCnt;
+        templ.dataset.blowDryTemplRef = id;
+        const sourceTempl = document.createElement('template');
+        sourceTempl.id = id;
+        sourceTempl.content.appendChild(templ.content);
+        head.append(sourceTempl);
+        templ.innerHTML = '';
+        currentCnt++;
+        head.dataset.blowDryCnt = currentCnt.toString();
+    }
+    blowDry(node) {
+        const blowDryEls = Array.from(node.querySelectorAll(this.blowDrySelector));
+        for (const bde of blowDryEls) {
+            if (bde instanceof HTMLTemplateElement) {
+                this.blowDryTemplElement(bde);
+            }
+            else if (bde instanceof HTMLScriptElement) {
+                this.blowDryScriptElement(bde);
+            }
+        }
     }
     blowDryToHead(node) {
         const templs = Array.from(node.querySelectorAll(this.blowDryToHeadSelector));
