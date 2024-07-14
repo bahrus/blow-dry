@@ -49,7 +49,7 @@ export class BlowDry extends HTMLElement {
         let currentCnt = Number(head.dataset.blowDryCnt) || 0;
         const id = 'blow-dry-src-' + currentCnt;
         se.dataset.blowDryScriptRef = id;
-        head[id] = se.src ? new Set([se.src]) : se.innerHTML;
+        head[id] = se.src ? [se.src] : se.innerHTML;
         se.innerHTML = '';
         currentCnt++;
         head.dataset.blowDryCnt = currentCnt.toString();
