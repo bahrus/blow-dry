@@ -53,6 +53,8 @@ export class BlowDry extends HTMLElement {
         se.innerHTML = '';
         currentCnt++;
         head.dataset.blowDryCnt = currentCnt.toString();
+        se.removeAttribute('blow-dry');
+        se.removeAttribute('data-blow-dry');
     }
     blowDryTemplElement(templ) {
         //never, ever make this asynchronous!!!

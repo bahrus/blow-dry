@@ -58,10 +58,12 @@ export class BlowDry extends HTMLElement{
         let currentCnt = Number(head.dataset.blowDryCnt) || 0;
         const id = 'blow-dry-src-' + currentCnt;
         se.dataset.blowDryScriptRef = id;
-        (<any>head)[id] = se.src ? [se.src] :se.innerHTML;
+        (<any>head)[id] = se.src ? [se.src] : se.innerHTML;
         se.innerHTML = '';
         currentCnt++;
         head.dataset.blowDryCnt = currentCnt.toString();
+        se.removeAttribute('blow-dry');
+        se.removeAttribute('data-blow-dry');
     }
 
     blowDryTemplElement(templ: HTMLTemplateElement){
