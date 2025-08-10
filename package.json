@@ -15,11 +15,14 @@
     "./blow-dry.js": "./blow-dry.js"
   },
   "scripts": {
-    "serve": "node node_modules/may-it-serve/serve.js",
+    "serve": "python ./node_modules/ssi-server/ssi_server.py",
     "update": "ncu -u && npm install"
   },
+  "dependencies": {
+    "mount-observer": "0.0.87"
+  },
   "devDependencies": {
-    "may-it-serve": "0.0.8"
+    "ssi-server": "0.0.1"
   },
   "repository": {
     "type": "git",
