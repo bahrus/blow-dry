@@ -1,3 +1,4 @@
+import 'mount-observer/preloadContent.js';
 export class BlowDry extends HTMLElement {
     #removeInner = '[itemprop]:not([itemscope])';
     get removeInner() {
@@ -58,17 +59,7 @@ export class BlowDry extends HTMLElement {
     }
     blowDryTemplElement(templ) {
         //never, ever make this asynchronous!!!
-        const head = document.head;
-        let currentCnt = Number(head.dataset.blowDryCnt) || 0;
-        const id = 'blow-dry-src-' + currentCnt;
-        templ.dataset.blowDryTemplRef = id;
-        const sourceTempl = document.createElement('template');
-        sourceTempl.id = id;
-        sourceTempl.content.appendChild(templ.content);
-        head.append(sourceTempl);
-        templ.innerHTML = '';
-        currentCnt++;
-        head.dataset.blowDryCnt = currentCnt.toString();
+        const content = templ.remoteContent;
     }
     blowDry(node) {
         const blowDryEls = Array.from(node.querySelectorAll(this.blowDrySelector));
