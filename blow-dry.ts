@@ -27,7 +27,7 @@ export class BlowDry extends HTMLElement{
         return this.#blowDryToHeadSelector;
     }
 
-    #blowDrySelector = '[blow-dry],[data-blow-dry]';
+    #blowDrySelector = '[blow-dry],[data-blow-dry],template:not([rel][src])';
     get blowDrySelector(){
         return this.#blowDrySelector;
     }
