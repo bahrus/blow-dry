@@ -20,7 +20,7 @@ export class BlowDry extends HTMLElement {
     get blowDryToHeadSelector() {
         return this.#blowDryToHeadSelector;
     }
-    #blowDrySelector = '[blow-dry],[data-blow-dry],template:not([rel][src])';
+    #blowDrySelector = '[blow-dry],[data-blow-dry],template:not([rel][src],[onload])';
     get blowDrySelector() {
         return this.#blowDrySelector;
     }
