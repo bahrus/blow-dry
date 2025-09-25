@@ -19,10 +19,10 @@
     "update": "ncu -u && npm install"
   },
   "dependencies": {
-    "mount-observer": "0.0.88"
+    "mount-observer": "0.0.102"
   },
   "devDependencies": {
-    "ssi-server": "0.0.1"
+    "ssi-server": "0.0.7"
   },
   "repository": {
     "type": "git",
