@@ -1,6 +1,6 @@
 import 'mount-observer/preloadContent.js';
 export class BlowDry extends HTMLElement {
-    #removeInner = '[itemprop]:not([itemscope])';
+    #removeInner = '[itemprop]:not([itemscope]),be-hive';
     get removeInner() {
         return this.#removeInner;
     }
