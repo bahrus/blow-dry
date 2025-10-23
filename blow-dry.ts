@@ -107,12 +107,25 @@ export class BlowDry extends HTMLElement{
     }
 
     connectedCallback(){
-        const rn = this.parentElement || this.getRootNode() as Element | ShadowRoot;
+        let rn = this.parentElement || this.getRootNode() as Element | ShadowRoot | DocumentFragment;
         if(!rn) throw 404;
+        const impH = (<any>rn).host?.dataset?.impH;
+        let templ: HTMLTemplateElement | undefined;
+        if(impH){
+            const srcTempl = document.getElementById(impH);
+            if(srcTempl instanceof HTMLTemplateElement){
+                rn = srcTempl.content;
+                templ = srcTempl;
+            }
+        }
         this.blowDryToHead(rn as DocumentFragment);
         this.blowDry(rn as DocumentFragment);
-        const templ = document.createElement('template');
-        templ.innerHTML = rn.innerHTML;
+        
+        if(!templ){
+            templ = document.createElement('template');
+            templ.innerHTML = rn.innerHTML;
+        }
+        
         //const clone = rn.cloneNode(true) as DocumentFragment;
         this.doCleanup(templ.content);
         // this.expandTemplatesWithinScope(templ.content, true);
